@@ -1,0 +1,49 @@
+<%- include("partials/header") -%>
+<div id="loader"></div>
+    <div class="container">
+        <% if (records.length===0) { %>
+            <div class="list">Add Your First Record by Clicking on '+' Icon</div>
+            <% } else { %>
+
+                <% records.forEach(record=> { %>
+                    <div class="list">
+                        <p class="inline-p name">
+                            <%= record.name %>
+                        </p>
+                        <p class="inline-p owe"><b>
+                                <%= record.owe %>
+                            </b></p>
+                        <p class="inline-p money <%= record.owe === "+" ? "get-money" : "pay-money"%>">
+                            <%= record.money %>
+                        </p>
+                        <a href="/modify/<%= record._id %>" class="inline-p faicon"><i
+                                class="fa-solid fa-pen-to-square"></i></a>
+                        <a href="/emailto/<%= record._id %>" onclick="startLoading()" class="inline-p faicon"><i
+                                class="fa-solid fa-envelope"></i></a>
+                    </div>
+                    <% }) %>
+
+                        <% } %>
+    </div>
+    <div class="score">
+        <h6 class="get-money">+ <%= plus %>
+        </h6>
+        <h6 class="pay-money">- <%= minus %>
+        </h6>
+        <h5>=</h5>
+        <h6 class=<%= plus > minus ? "get-money" : "pay-money" %>>
+            <%= plus - minus %>
+        </h6>
+    </div>
+    <p class="info get-money">'+' : You'll receive the amount from someone</p>
+    <p class="info pay-money">'-' : You'll pay someone.</p>
+
+    <%- include("partials/modal") -%>
+
+    <script>
+        document.getElementById("logout").style.display = "block";
+        function startLoading() {
+            document.getElementById("loader").style.display = "block";
+        }
+    </script>
+<%- include("partials/footer") -%>
